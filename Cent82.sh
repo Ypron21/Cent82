@@ -4,28 +4,23 @@ wget -O ng.sh https://bit.ly/GCngrok > /dev/null 2>&1
 chmod +x ng.sh
 ./ng.sh
 clear
-
-# Start ngrok in foreground for debugging
 echo "======================="
-echo "Starting ngrok..."
+echo choose ngrok region
 echo "======================="
-./ngrok tcp --region $CRP 3388 &
-
-# Wait for ngrok to start
-sleep 10
-
-# Check if ngrok is running
-if ! curl --silent --show-error http://127.0.0.1:4040/api/tunnels > /dev/null; then
-    echo "Ngrok failed to start. Check ngrok.log for details."
-    exit 1
-fi
-
+echo "us - United States (Ohio)"
+echo "eu - Europe (Frankfurt)"
+echo "ap - Asia/Pacific (Singapore)"
+echo "au - Australia (Sydney)"
+echo "sa - South America (Sao Paulo)"
+echo "jp - Japan (Tokyo)"
+echo "in - India (Mumbai)"
+read -p "choose ngrok region: " CRP
+./ngrok tcp --region $CRP 3388 &>/dev/null &
 echo "===================================="
 echo "Install RDP"
 echo "===================================="
 docker pull akuhnet/centos7-fix:1.1
 clear
-
 echo "===================================="
 echo "Start RDP"
 echo "===================================="
@@ -33,6 +28,7 @@ echo "===================================="
 echo "Username : root"
 echo "Password : 123"
 echo "RDP Address:"
+sleep 10  # Wait for 10 seconds to ensure ngrok is running
 curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p'
 echo "===================================="
 echo "===================================="
