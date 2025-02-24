@@ -1,8 +1,11 @@
 echo -e "$123\n$123\n" | sudo passwd
 rm -rf ngrok  ngrok.zip  ng.sh > /dev/null 2>&1
-wget -O ng.sh https://bit.ly/GCngrok > /dev/null 2>&1
-chmod +x ng.sh
-./ng.sh
+
+# Download and install the latest version of ngrok
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+unzip ngrok-stable-linux-amd64.zip
+chmod +x ngrok
+
 clear
 
 echo "======================="
